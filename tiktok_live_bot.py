@@ -1,3 +1,4 @@
+```python
 # tiktok_live_bot.py
 import asyncio
 import os
@@ -5,6 +6,7 @@ from typing import List, Dict
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
 from telegram import Bot
 
+# جلب المتغيرات من البيئة
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 CHECK_INTERVAL_SECONDS = int(os.getenv("CHECK_INTERVAL_SECONDS", "30"))
@@ -64,8 +66,8 @@ async def monitor_loop(usernames: List[str], interval: int):
 
                 if is_live and not known_live.get(user, False):
                     known_live[user] = True
-                    text = f"🔴 @{user} دابا فـ LIVE على TikTok!
-https://www.tiktok.com/@{user}"
+                    # إصلاح f-string الممتد على أكثر من سطر
+                    text = f"🔴 @{user} دابا فـ LIVE على TikTok!\nhttps://www.tiktok.com/@{user}"
                     try:
                         await bot.send_message(chat_id=CHAT_ID, text=text)
                         print(f"Notified live: {user}")
@@ -92,3 +94,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
